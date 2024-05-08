@@ -1,0 +1,37 @@
+{% extends 'default.html' %}
+
+{% block title %}
+  Объявление
+{% endblock title %}
+
+
+{% block posts_content %}
+
+  <h1>{{ anons.title }}</h1>
+  <p>
+    Автор: {{ anons.author|capfirst }} | Дата создания: {{ anons.time_created|date:'d M Y'}}
+    {% if request.user == anons.author %}
+    <a href="/anons/{{ anons.pk }}/update/">Редактировать</a>
+    |
+    <a href="/anons/{{ anons.pk }}/delete/">Удалить</a>
+    {% endif %}
+  </p>
+  <p>Категория: {{ anons.category }}</p>
+  <hr>
+  <body><p>{{ anons.announcement|safe }}</p></body>
+
+
+    <p><a href="/anons/{{ anons.pk }}/comment_create/">Откликнуться</a></p>
+    {% for comment in anons.comment_set.all %}
+      <h3>Отклик от {{ comment.author|capfirst }}
+        {% if request.user == comment.author %}
+          (<a href="/anons/{{ anons.pk }}/comment_delete/{{ comment.pk }}/">Удалить свой отклик</a>)
+        {% endif %}
+      </h3>
+      <p>{{ comment.text }}</p>
+      <hr>
+
+  {% endfor %}
+
+
+{% endblock posts_content %}

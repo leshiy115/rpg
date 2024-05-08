@@ -1,0 +1,17 @@
+{% extends 'default.html' %}
+
+{% block head %}
+  Редактирование
+{% endblock head %}
+
+{% block posts_content %}
+  <h3>Редактирование объявления</h3>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+  </form>
+
+
+{% endblock posts_content %}

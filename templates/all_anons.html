@@ -1,0 +1,26 @@
+{% extends 'default.html' %}
+
+{% block title %}
+  Объявления
+{% endblock title %}
+
+{% block posts_content %}
+  <h1>Объявления:</h1>
+  <p><a href="{% url 'my_list' %}">Откликнувшиеся</a> | <a href="{% url 'anons_create' %}">Создать новое объявление</a></p>
+
+  <hr>
+  <hr>
+
+  {% if announcement_list %}
+  {% for anons in announcement_list %}
+    <h3><a href="{% url 'anons_detail' anons.id %}">{{ anons.title }}</a>( {{ anons.comment_set.all|length }}:Отклика)</h3>
+    <p>Автор: {{ anons.author.username|capfirst }}</p>
+    <hr>
+  {% endfor %}
+  {% else %}
+    <h2>"Нет Объявлений!"</h2>
+  {% endif %}
+
+{% endblock posts_content %}
+
+

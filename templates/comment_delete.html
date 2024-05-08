@@ -1,0 +1,12 @@
+{% extends 'default.html' %}
+
+{% block posts_content %}
+  <h1>Удаление отклика</h1>
+  <hr>
+  <form action="" method="post">
+      {% csrf_token %}
+      <p>Удалить "{{ comment.title }}"?</p>
+      <input type="submit" value="Удалить" />
+  </form>
+
+{% endblock posts_content %}

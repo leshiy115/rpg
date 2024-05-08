@@ -1,0 +1,51 @@
+{% extends 'default.html' %}
+
+{% block title %}
+  Объявления
+{% endblock title %}
+
+{% block posts_content %}
+  <h1>Объявления:</h1>
+  <p><a href="{% url 'anons_create' %}">Создать новое объявление</a></p>
+
+  <hr>
+    <form action="" method="get">
+      {{ filterset.form.as_p }}
+      <input type="submit" value=Найти />
+    </form>
+  <hr>
+
+  {% if all_comments %}
+  {% for comment in all_comments %}
+    {% if comment.accepted == None or comment.accepted %}
+
+      <h2>
+        Автор: {{ comment.author.username|capfirst }}
+        <small>({{ comment.time_created|date:'d M Y' }})</small>
+      </h2>
+
+      <p>Текст: {{ comment.text }}</p>
+
+      <p>Отклик на объявление: <a href="{% url 'anons_detail' comment.anons.pk %}">{{ comment.anons.title }}</a></p>
+
+      {% if comment.accepted == None %}
+      <form action="" method="post">
+        {% csrf_token %}
+        <fieldset> <legend><b>Принять отклик?</b></legend>
+        <label><input type="radio" name="comment" value='{{ comment.pk }} 1'> да</label>
+        <label><input type="radio" name="comment" value='{{ comment.pk }} 0'> нет</label>
+        </fieldset>
+        <p><input type="submit"></p>
+      </form>
+      {% endif %}
+      <hr>
+
+    {% endif %}
+
+
+  {% endfor %}
+  {% else %}
+    <h1>"Вы не написали ни одного объявления"</h1>
+  {% endif %}
+
+{% endblock posts_content %}

@@ -1,0 +1,39 @@
+{% extends 'default.html' %}
+
+{% block title %}
+{{ user.username | capfirst }}
+{% endblock title %}
+
+{% block posts_content %}
+    <h1>{{ user.username }}</h1>
+
+    <p>Имя:
+      {% if user.first_name %}
+        {{ user.first_name | capfirst}}
+      {% else %}
+        .......
+      {% endif %}
+    </p>
+
+    <p>Фамилия:
+      {% if user.last_name %}
+        {{ user.last_name | capfirst}}
+      {% else %}
+        .......
+      {% endif %}
+    </p>
+
+    <p>
+      Почта: {{ user.email }}
+    </p>
+
+    <p>
+      <a href="{% url 'account_change_password' %}">Изменить пароль</a>
+    </p>
+
+    <p>
+      <a href="{% url 'account_email' %}">Изменить почту</a>
+    </p>
+{% endblock posts_content %}
+
+
